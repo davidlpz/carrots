@@ -28,52 +28,51 @@ What can I customize?
 --------------------------------------
 
 **Your site name**
-
 Change the value of *$settings['title']*.
 
 **Your image folders path**
-
 Set the new one in *$settings['path']*.
 
 **Your theme**
-
 Make a new CSS file in the styles folder. Set the name of the file you choose in *$settings['theme']*.
 
 **The order of the menu**
-
 Go to *$settings['order_menu']* and set it to *'ASC'* for alphabetical order or *'DESC'* for descending alphabetical order.
 
 **I don't want to display the menu**
-
 Set *$settings['show_menu']* to *false* to hide it.
 
 **I don't like the grid in the home page**
-
 Set *$settings['show_covers_grid']* to *false* to hide it.
 
 **I want to set a default cover image for a gallery**
-
 Just change the image name to *_cover*.
 
 **I want to show a gallery description**
-
 Make a new textfile with the description in the proper folder and name it *_info.txt*.
 
 **I want to choose the order of the files**
-
 Go to *$settings['order_files']* and set it to *'ASC'* for alphabetical order or *'DESC'* for descending alphabetical order.
 
-**I want to show the content of each gallery as a grid**
+**I don't want to show the covers inside the galleries**
+Change the value of *$settings['show_cover']* to false.
 
+**I want to show the content of each gallery as a grid**
 Change the value of *$settings['display_mode']* to 'grid'.
 					
 
 Changelog
 --------------------------------------
 
+* **v0.21** 2013-03-18
+
+	The cover images can be displayed or hidden inside the galleries.
+
+	Minor compatibility fixes.
+
 * **v0.2** 2013-01-28
 
-	UTF-8 bug fixed: now folder names can have symbols.
+	UTF-8 bug fixed: folder names now can have symbols.
 	
  	Minor bugs fixes.
 

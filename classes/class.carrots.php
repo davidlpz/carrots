@@ -7,7 +7,7 @@
  *
  * For PHP 5 or higher
  *
- * @version 0.2 (2012-01-28)
+ * @version 0.21 (2012-03-18)
  * @author David López
  * @copyright 2012 David López
  * @license Released under the MIT License
@@ -115,7 +115,7 @@ class Carrots{
 				if (is_file($file)
 					&& (strpos($filename,".") !== 0)
 					&& (in_array(strToLower($info["extension"]),$settings['extensions']))) {
-						$this->images[] = self::$galleryUrl . rawurlencode($folder) . '/' . $filename;
+						$this->images[] = $filename;
 				}
 			}
 			closedir($dh);
@@ -193,18 +193,20 @@ class Carrots{
 	// Display the cover of a folder
 	private function getCover($folder){
 		global $settings;
+
+		$baseUrl = self::$galleryUrl . rawurlencode($folder) . '/';
 		
 		// First, check if there's stablished a cover for the folder
 		foreach ($settings['extensions'] as $ext) {
 			if (file_exists(self::$galleryPath . $folder . '/_cover.' . $ext)) {
-				return '<img src="' . self::$galleryUrl . rawurlencode($folder) . '/_cover.' . $ext . '" />';
+				return '<img src="' . $baseUrl . '_cover.' . $ext . '" alt="'. $folder . '" />';
 			}
 		}
 
 		// There's no cover, so get the images and pick the first one
 		$this->setImages($folder);
 		if (sizeof($this->images) > 0) {
-			return '<img src="' . $this->images[0] .'" />';
+			return '<img src="' . $baseUrl . $this->images[0] .'" alt="'. $folder . '" />';
 		}
 
 		return false; // The folder's empty
@@ -223,11 +225,16 @@ class Carrots{
 	private function displayImages() {
 		global $settings;
 
+		$baseUrl = self::$galleryUrl . rawurlencode($this->getFolder()) . '/';
+
 		echo '<ul class="' . $settings['display_mode'] . '">';
 		foreach ($this->images as $file) {
+			if (!$settings['show_cover']) {
+				if (strpos($file,'_cover') !== false) continue;
+			}
 			echo '<li>';
-			echo '<a href="' . $file . '" rel="lightbox[' . $this->getFolder() . ']">';
-			echo '<img src="' . $file . '" />';
+			echo '<a href="' . $baseUrl . $file . '" rel="lightbox[' . $this->getFolder() . ']">';
+			echo '<img src="' . $baseUrl . $file . '" alt="' . $file . '"/>';
 			echo '</a>';
 			echo '</li>';
 		}		
