@@ -7,7 +7,7 @@
  *
  * For PHP 5 or higher
  *
- * @version 0.21 (2013-03-18)
+ * @version 0.22 (2013-05-04)
  * @author David López
  * @copyright 2012 David López
  * @license Released under the MIT License

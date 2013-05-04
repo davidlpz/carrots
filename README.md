@@ -64,6 +64,10 @@ Change the value of *$settings['display_mode']* to 'grid'.
 Changelog
 --------------------------------------
 
+* **v0.22** 2013-05-04
+
+	Better thumbnails.
+
 * **v0.21** 2013-03-18
 
 	The cover images can be displayed or hidden inside the galleries.

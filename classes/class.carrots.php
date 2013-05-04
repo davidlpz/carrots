@@ -7,7 +7,7 @@
  *
  * For PHP 5 or higher
  *
- * @version 0.21 (2012-03-18)
+ * @version 0.22 (2012-05-04)
  * @author David López
  * @copyright 2012 David López
  * @license Released under the MIT License
@@ -198,18 +198,31 @@ class Carrots{
 		
 		// First, check if there's stablished a cover for the folder
 		foreach ($settings['extensions'] as $ext) {
-			if (file_exists(self::$galleryPath . $folder . '/_cover.' . $ext)) {
-				return '<img src="' . $baseUrl . '_cover.' . $ext . '" alt="'. $folder . '" />';
+			$img = self::$galleryPath . $folder . '/_cover.' . $ext;
+			if (file_exists($img)) {
+				$side = $this->getSmallSide($img);
+				$url = $this->getUrl($img);
+				return '<img src="' . $url . '" class="' . $side . '" alt="'. $folder . '" />';
 			}
 		}
 
 		// There's no cover, so get the images and pick the first one
 		$this->setImages($folder);
 		if (sizeof($this->images) > 0) {
-			return '<img src="' . $baseUrl . $this->images[0] .'" alt="'. $folder . '" />';
+			$img = self::$galleryPath . $folder . '/' . $this->images[0];
+			$side = $this->getSmallSide($img);
+			$url = $this->getUrl($img);
+			return '<img src="' . $url .'" class="' . $side . '" alt="'. $folder . '" />';
 		}
 
 		return false; // The folder's empty
+	}
+
+	// Compare the image dimensions to adjust the thumbnails
+	private function getSmallSide($img){
+		$size = getimagesize($img);
+		$class = ($size[0] <= $size[1]) ? 'maxwidth' : 'maxheight';
+		return $class;
 	}
 
 	// Get the info of a folder
@@ -217,7 +230,6 @@ class Carrots{
 		if (file_exists(self::$galleryPath . $folder . '/_info.txt')) {
 			return nl2br(file_get_contents(self::$galleryPath . $folder . '/_info.txt'));
 		}
-
 		return false; // There's no info file
 	}
 

@@ -2,7 +2,7 @@
 
 //SETTINGS FILE
 
-$settings['version'] = 'v0.21';
+$settings['version'] = 'v0.22';
 
 // Page title
 $settings['title'] = 'Carrots';

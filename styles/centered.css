@@ -149,9 +149,13 @@ section p{
 .grid li:hover{
 	box-shadow:0 0 5px 0 #666;
 }
-.grid li img{
-	max-width:100%;
-	min-height:100%;
+.grid li img.maxwidth{
+	width:100%;
+	height:auto;
+}
+.grid li img.maxheight{
+	width:auto;
+	height:100%;
 }
 .list li{
 	margin:20px;
