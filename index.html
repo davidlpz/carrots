@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="description" content="Carrots is a simple PHP image gallery script, perfect to easily build a portfolio site. You just have to upload it to your server along with your image files" />
+<meta name="keywords" content="carrots, powered by carrots, poweredbycarrots, php gallery, gallery script, photo gallery, image gallery, portfolio, php, free script, open source, david lopez"/>
+<title>Carrots | Help others see you better</title>
+<link href='http://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet'>
+<link rel="stylesheet" href="css/style.css" />
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+
+<body>
+	<nav>
+		<a class="button" href="#home">Home</a>
+		<a class="button" href="/demo/" target="_blank">Demo</a>
+		<a class="button" href="#instructions">Instructions</a>
+		<a class="button" href="#howto">How to</a>
+	</nav>
+
+	<a id="backTop" class="hidden" href="#home"></a>
+
+	<!-- Section one: home -->
+
+	<section id="home">
+		<div class="wrapper clearfix">
+			<header>
+				<h1>Carrots</h1>
+				<span>help others see you better</span>
+			</header>
+			<div class="left">
+				<p>Carrots is a simple PHP image gallery script, perfect to easily build a portfolio site.<br />
+				You just have to upload it to your server along with your image files and that's it. No code. No databases. Just your FTP client.</p>
+				<p>Carrots es un script en PHP para hacer galerías de imágenes, perfecto para montar fácilmente un portfolio.<br />
+				Solo tienes que subirlo a tu servidor junto a tus ficheros de imágenes y listo. Sin tocar código. Sin necesidad de bases de datos. Solo tu cliente FTP.</p>
+				<p class="small">
+					<a class="button bigger" href="carrots_0.22.zip" title="Download Carrots">Download</a>
+					Version 0.22 | May 04, 2013 | <a href="https://github.com/davidlpz/carrots" target="_blank" title="View source code in GitHun">View source code in GitHub</a>
+				</p>
+			</div>
+			<div class="right">
+				<img id="images" src="img/image1.jpg" alt="Demo images" />
+				<div id="menu-circ">
+					<a id="image1" onclick="javascript:changeImage(this)"></a>
+					<a id="image2" onclick="javascript:changeImage(this)"></a>
+					<a id="image3" onclick="javascript:changeImage(this)"></a>
+					<a id="image4" onclick="javascript:changeImage(this)"></a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Section two: instructions -->
+
+	<section id="instructions">
+		<div class="wrapper clearfix">
+			<div class="left">
+				<h2>Requirements</h2>
+				<ul>
+					<li>PHP 5 or higher.</li>
+					<li>FTP access.</li>
+				</ul>
+				<h2>Instructions</h2>
+				<ol>
+					<li>Download Carrots and unzip it on your computer.</li>
+					<li>Open the settings.php file in a plain text editor (like notepad) and customize it.</li>
+					<li>Upload the folders contents to your site.</li>
+					<li>Upload your folders with images to the images folder.</li>
+				</ol>
+			</div>
+			<div class="right">
+				<h2>Requisitos</h2>
+				<ul>
+					<li>PHP 5 o superior.</li>
+					<li>Acceso FTP.</li>
+				</ul>
+				<h2>Instrucciones</h2>
+				<ol>
+					<li>Descarga Carrots y descomprime el archivo.</li>
+					<li>Abre el archivo settings.php en un editor de texto (como bloc de notas, por ejemplo) y personalízalo.</li>
+					<li>Carga el contenido de la carpeta en tu servidor.</li>
+					<li>Sube tus carpetas al directorio de imágenes.</li>
+				</ol>
+			</div>
+		</div>
+	</section>
+
+	<!-- Section three: howto -->
+
+	<section id="howto">
+		<div class="wrapper clearfix">
+			<div class="left">
+				<h2>What can I customize?</h2>
+				<dl>
+					<dt>Your site name</dt>
+						<dd>Change the value of $settings['title'].</dd>
+					<dt>Your image folders path</dt>
+						<dd>Set the new one in $settings['path'].</dd>
+					<dt>Your theme</dt>
+						<dd>Make a new CSS file in the styles folder. Set the name of the file you choose in $settings['theme'].</dd>
+					<dt>The order of the menu</dt>
+						<dd>Set $settings['order_menu'] to 'ASC' for alphabetical order or 'DESC' for descending alphabetical order.</dd>
+					<dt>I don't want to display the menu</dt>
+						<dd>Set $settings['show_menu'] to false to hide it.</dd>
+					<dt>I don't like the grid in the home page</dt>
+						<dd>Set $settings['show_covers_grid'] to false to hide it.</dd>
+					<dt>I want to set a default cover image for a gallery</dt>
+						<dd>Just change the image name to _cover.</dd>
+					<dt>I want to show a gallery description</dt>
+						<dd>Make a new textfile with the description in the proper folder and name it _info.txt.</dd>
+					<dt>I don't want to show the covers inside the galleries</dt>
+						<dd>Change the value of $settings['show_cover'] to false.</dd>
+					<dt>I want to choose the order of the files</dt>
+						<dd>Set $settings['order_files'] to 'ASC' for alphabetical order or 'DESC' for descending alphabetical order.</dd>					
+					<dt>I want to show the content of each gallery as a grid</dt>
+						<dd>Change the value of $settings['display_mode'] to 'grid'.</dd>
+				</dl>
+			</div>
+			<div class="right">
+				<h2>¿Qué puedo personalizar?</h2>
+				<dl>
+					<dt>El nombre de la web</dt>
+						<dd>Cambia el valor que aparece en $settings['title'].</dd>
+					<dt>El nombre del directorio donde guardarás tus carpetas</dt>
+						<dd>Escribe el nuevo en $settings['path'].</dd>
+					<dt>El diseño</dt>
+						<dd>Crea un archivo CSS con el estilo en la carpeta styles. Escribe el nombre de ese fichero en $settings['theme'].</dd>
+					<dt>El orden del menú</dt>
+						<dd>Escribe en $settings['order_menu'] 'ASC' para orden alfabético o 'DESC' para que vaya al contrario.</dd>
+					<dt>No quiero que aparezca el menú</dt>
+						<dd>Cambia el valor de $settings['show_menu'] a false.</dd>
+					<dt>No quiero las galerías en la página principal</dt>
+						<dd>Cambia el valor de $settings['show_covers_grid'] a false.</dd>
+					<dt>Quiero mostrar una imagen por defecto en una galería</dt>
+						<dd>Cambia el nombre de la imagen por _cover.</dd>
+					<dt>Quiero mostrar una descripción en una galería</dt>
+						<dd>Crea un archivo con el texto a mostrar en la carpeta correspondiente y llámalo _info.txt.</dd>
+					<dt>No quiero mostrar la carátula dentro de las galerías</dt>
+						<dd>Cambia el valor de $settings['show_cover'] a false.</dd>
+					<dt>Quiero cambiar el orden de los archivos</dt>
+						<dd>En $settings['order_files'] escribe 'ASC' para orden alfabético o 'DESC' para que vaya al contrario.</dd>
+					<dt>Quiero mostrar el contenido de cada galería en forma de cuadrícula</dt>
+						<dd>Cambia el valor de $settings['display_mode'] por 'grid'.</dd>
+				</dl>
+			</div>
+		</div>
+	</section>
+
+
+<script src="library.js"></script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-38583319-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>

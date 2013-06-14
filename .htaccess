@@ -1,0 +1,11 @@
+ExpiresActive on
+ExpiresDefault "access plus 1 week"
+
+<FilesMatch "\.(js|css|ttf|eot|otf|svg)$">
+SetOutputFilter DEFLATE
+</FilesMatch>
+
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^poweredbycarrots.davidlpz.com$ [OR]
+RewriteCond %{HTTP_HOST} ^www.poweredbycarrots.davidlpz.com$
+RewriteRule ^(.*)$ "http://www.poweredbycarrots.net/$1" [R=301,L]

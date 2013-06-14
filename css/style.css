@@ -1,0 +1,256 @@
+/* Reset.css
+---------------------------------------------------- */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video{
+	margin:0;
+	padding:0;
+	border:0;
+	font-size:100%;
+	font:inherit;
+	vertical-align:baseline;
+}
+body, div, form, fieldset, input, textarea{
+	border:0;
+	outline:none;
+	line-height:1;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section{
+	display:block;
+}
+a{
+	text-decoration:none;
+}
+html{
+	-webkit-text-size-adjust:none;
+	height:100%;
+}
+* {
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	box-sizing:border-box;
+}
+
+/* General
+---------------------------------------------------- */
+
+body{
+	color:#FFF6EB;
+	font-size:62.5%;
+	font-family:'Oxygen', sans-serif;
+	background:#FFF6EB;
+}
+strong{
+	font-weight:bold;
+}
+img{
+	width:100%;
+	border:1px solid #DDD;
+	box-shadow:0 0 5px 0 #999;
+}
+::selection {
+	background:#FF9000;
+	color:#FFF;
+}
+.clearfix:after{
+	content:".";
+	display:block;
+	height:0;
+	clear:both;
+	visibility:hidden;
+}
+* html .clearfix{ /* CSS rule for IE6 */
+	height:1%;
+}
+*:first-child+html .clearfix{ /* CSS rule for IE7 */
+	min-height:1px;
+}
+.left{
+	float:left;
+	width:45%;
+}
+.right{
+	float:right;
+	width:45%;
+}
+.hidden{
+	display:none;
+}
+section{
+	width:100%;
+	height:600px;
+	display:block;
+	overflow:hidden;
+	position:relative;
+}
+.wrapper{
+	position:absolute;
+	height:auto;
+	top:50%;
+}
+
+/* Nav bar
+---------------------------------------------------- */
+
+nav{
+	text-align:right;
+	text-transform:uppercase;
+	position:absolute;
+	z-index:100;
+	top:35px;
+}
+.button{
+	color:#FFFCF5;
+	font-size:1.2em;
+	margin-top:20px;
+	padding:5px 10px;
+	background:#FF8000;
+	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	border-radius:5px;
+	cursor:pointer;
+}
+.button:hover{
+	background:#522E00;
+}
+nav a{
+	margin:0 0 0 5px;
+}
+nav, .wrapper{
+	width:900px;
+	left:50%;
+	margin-left:-450px;
+}
+
+
+/* Arrow
+---------------------------------------------------- */
+
+#backTop{ 
+	height:100px;
+	width:100px;
+	background:url('../img/arrow.png') center center no-repeat;
+	position:fixed;
+	top:0;
+	right:10px;
+	z-index:200;
+	-webkit-transition: all 0.2s ease-in-out;
+		-moz-transition: all 0.2s ease-in-out;
+		-o-transition: all 0.2s ease-in-out;
+		-ms-transition: all 0.2s ease-in-out;
+		transition: all 0.2s ease-in-out;
+}
+
+
+/* Section one
+---------------------------------------------------- */
+
+section#home{
+	background:#FFF6EB;
+	color:#333;
+}
+header{
+	margin-bottom:25px;
+}
+h1{
+	font-size:2.5em;
+	font-weight:bold;
+	text-transform:uppercase;
+	display:inline;
+}
+header span{
+	font-size:1.8em;
+	margin-left:10px;
+	color:#522E00;
+}
+p, ul, ol{
+	font-size:1.6em;
+	line-height:1.7em;
+	text-align:justify;
+	margin-bottom:25px;
+}
+ul, ol, dd{
+	margin-left:23px;
+}
+p.small{
+	font-size:1.1em;
+}
+.bigger{
+	font-size:1.5em;
+	margin-right:5px;
+}
+#images{
+	cursor:pointer;
+}
+#menu-circ{
+	text-align:center;
+	margin-top:10px;
+}
+#menu-circ a{
+	cursor:pointer;
+	display:inline-block;
+	width:10px;
+	height:10px;
+	margin:0 0 0 3px;
+	background: url('../img/btn-gray.png') no-repeat top;
+}
+#menu-circ a:hover,
+#menu-circ a:active,
+#menu-circ a:first-child{
+	background: url('../img/btn-orange.png') no-repeat top;
+}
+
+/* Section two
+---------------------------------------------------- */
+
+section#instructions{
+	background:#FF8000;
+}
+h2{
+	font-size:2em;
+	font-weight:bold;
+	margin-bottom:20px;
+}
+
+/* Section three
+---------------------------------------------------- */
+
+section#howto{
+	background:#092;
+}
+dl{
+	font-size:1.4em;
+	line-height:1.5em;
+	text-align:justify;
+	margin-bottom:25px;
+}
+dt{
+	font-weight:bold;
+}
+dd{
+	margin-bottom:15px;
+}
+
+
+@media (max-width:960px) {
+	body{
+		font-size:50%;
+	}
+	nav,.wrapper{
+		width:700px;
+		margin-left:-350px;
+	}
+}
