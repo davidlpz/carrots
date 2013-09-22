@@ -2,30 +2,11 @@ function $(id) { return document.getElementById(id); }
 
 function addListener(element,event,handler){
 	if (element.addEventListener) {
-		element.addEventListener(event,handler,false); 
+		element.addEventListener(event,handler,false);
 	} else if (element.attachEvent) {
 		element.attachEvent('on'+event,handler);
 	}
 }
-
-function resize() {
-	var sections = document.getElementsByTagName('section'),
-		h = window.innerHeight || document.documentElement.clientHeight,
-		margin = 50,
-		max, wrapper, wH,
-		i = 0;
-
-	for (i; i < sections.length; i++) {
-		wrapper = sections[i].children[0];
-		wH = wrapper.clientHeight;
-		max = (h < wH) ? wH+margin : h;
-		sections[i].style.height = max + 'px';
-		wrapper.style.marginTop = '-' + wH/2 + 'px';
-	}
-}
-
-addListener(window,'load',resize);
-addListener(window,'resize',resize);
 
 var Scroller = {
 	// Extract all the links and attach the event to the ones that validate
@@ -42,7 +23,7 @@ var Scroller = {
 
 	// Attach an event for an element
 	add: function(elem,event,handler){
-		if (elem.addEventListener) return elem.addEventListener(event,handler,false); 
+		if (elem.addEventListener) return elem.addEventListener(event,handler,false);
 		if (elem.attachEvent) return elem.attachEvent('on'+event,handler);
 	},
 
@@ -141,33 +122,3 @@ function scrollTopControl(){
 }
 
 addListener(window,'scroll',scrollTopControl);
-
-function ajax(){
-	var xmlhttp;
-	if (window.XMLHttpRequest) //code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp = new XMLHttpRequest();
-	else //code for IE6, IE5
-		xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
-	return xmlhttp;
-}
-
-function contact(){
-	var xmlhttp = ajax(),
-		parent = document.getElementById('contactForm').parentNode;
-
-	if (document.getElementById('email').value === '' ||
-		document.getElementById('message').value === '') return false;
-
-	xmlhttp.open('POST','contact.php',true);
-	xmlhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-	xmlhttp.send('email='+document.getElementById('email').value+'&message='+document.getElementById('message').value);
-	xmlhttp.onreadystatechange = function() {
-		if (xmlhttp.readyState==4 && xmlhttp.status==200){
-			parent.removeChild(document.getElementById('contactForm'));
-			parent.innerHTML = xmlhttp.responseText;
-		}
-	}
-	return false;
-}
-
-addListener($('contactForm'),'submit',contact);
