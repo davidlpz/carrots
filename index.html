@@ -2,12 +2,11 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="description" content="Carrots is a simple PHP image gallery script, perfect to easily build a portfolio site. You just have to upload it to your server along with your image files" />
 <meta name="keywords" content="carrots, powered by carrots, poweredbycarrots, php gallery, gallery script, photo gallery, image gallery, portfolio, php, free script, open source, david lopez"/>
 <title>Carrots | Help others see you better</title>
 <link href='http://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet'>
-<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="css/style.css" />
 <!--[if lt IE 9]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
@@ -16,7 +15,7 @@
 <body>
 	<nav>
 		<a class="button" href="#home">Home</a>
-		<a class="button" href="http://davidlpz.com/demo/carrots/" target="_blank">Demo</a>
+		<a class="button" href="/demo/" target="_blank">Demo</a>
 		<a class="button" href="#instructions">Instructions</a>
 		<a class="button" href="#howto">How to</a>
 	</nav>
@@ -26,7 +25,7 @@
 	<!-- Section one: home -->
 
 	<section id="home">
-		<div class="centered">
+		<div class="wrapper clearfix">
 			<header>
 				<h1>Carrots</h1>
 				<span>help others see you better</span>
@@ -56,8 +55,7 @@
 	<!-- Section two: instructions -->
 
 	<section id="instructions">
-		<div class="triangle"></div>
-		<div class="centered">
+		<div class="wrapper clearfix">
 			<div class="left">
 				<h2>Requirements</h2>
 				<ul>
@@ -92,8 +90,7 @@
 	<!-- Section three: howto -->
 
 	<section id="howto">
-		<div class="triangle"></div>
-		<div class="centered">
+		<div class="wrapper clearfix">
 			<div class="left">
 				<h2>What can I customize?</h2>
 				<dl>
@@ -116,7 +113,7 @@
 					<dt>I don't want to show the covers inside the galleries</dt>
 						<dd>Change the value of $settings['show_cover'] to false.</dd>
 					<dt>I want to choose the order of the files</dt>
-						<dd>Set $settings['order_files'] to 'ASC' for alphabetical order or 'DESC' for descending alphabetical order.</dd>
+						<dd>Set $settings['order_files'] to 'ASC' for alphabetical order or 'DESC' for descending alphabetical order.</dd>					
 					<dt>I want to show the content of each gallery as a grid</dt>
 						<dd>Change the value of $settings['display_mode'] to 'grid'.</dd>
 				</dl>
