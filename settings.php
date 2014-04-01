@@ -2,13 +2,16 @@
 
 //SETTINGS FILE
 
-$settings['version'] = 'v0.22';
+$settings['version'] = 'v0.3';
 
 // Page title
 $settings['title'] = 'Carrots';
 
-// Folder's path
-$settings['path'] = 'images';
+// Gallery folder's name
+$settings['gallery_path'] = 'images';
+
+// Cache folder's name
+$settings['cache_path'] = 'cache';
 
 // Theme to display
 $settings['theme'] = 'centered.css';
@@ -34,7 +37,15 @@ $settings['show_covers_grid'] = true;
 
 // Display the cover inside the gallery 
 // Values: [ true | false ]
-$settings['show_cover'] = false;
+$settings['show_cover'] = true;
+
+// Display the title of the gallery 
+// Values: [ true | false ]
+$settings['show_title'] = true;
+
+// Set the width and height of the cover thumb
+$settings['thumb_w'] = 165;
+$settings['thumb_h'] = 125;
 
 // Order of the files
 // Values: ['ASC' | 'DESC']
@@ -42,6 +53,6 @@ $settings['order_files'] = 'ASC';
 
 // Display images in grid or list mode 
 // Values: [ 'grid' | 'list' ]
-$settings['display_mode'] = 'list';
+$settings['display_mode'] = 'grid';
 	
 ?>

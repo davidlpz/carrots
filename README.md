@@ -39,6 +39,9 @@ Make a new CSS file in the styles folder. Set the name of the file you choose in
 **The order of the menu**
 Go to *$settings['order_menu']* and set it to *'ASC'* for alphabetical order or *'DESC'* for descending alphabetical order.
 
+**The size of the thumbnails**
+Set the new one on *$settings['width']* and *$settings['height']*.
+
 **I don't want to display the menu**
 Set *$settings['show_menu']* to *false* to hide it.
 
@@ -64,6 +67,12 @@ Change the value of *$settings['display_mode']* to 'grid'.
 Changelog
 --------------------------------------
 
+* **v0.3** 2014-04-01
+
+	Automatic cached thumbnails. You only have to set the height and width in the settings file.
+
+	Cover's UTF-8 bug and other minor bugs fixed.
+
 * **v0.22** 2013-05-04
 
 	Better thumbnails.
@@ -72,13 +81,13 @@ Changelog
 
 	The cover images can be displayed or hidden inside the galleries.
 
-	Minor compatibility fixes.
+	Minor compatibility fixed.
 
 * **v0.2** 2013-01-28
 
 	UTF-8 bug fixed: folder names now can have symbols.
 	
- 	Minor bugs fixes.
+ 	Minor bugs fixed.
 
 * **v0.1** 2012-11-28
 

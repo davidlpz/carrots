@@ -41,6 +41,11 @@ html{
 /* General
 ---------------------------------------------------- */
 
+*{
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	box-sizing:border-box;
+}
 body{
 	color:#666;
 	background:#FEFEFE;
@@ -136,26 +141,28 @@ section p{
 	margin:0 20px 10px;
 }
 .grid li{
-	float:left;
-	margin:20px;
-	width:195px;
-	height:150px;
-	display:inline;
+	display:inline-block;
+	zoom:1;
+	*display:inline;
+	vertical-align:top;
+	width:165px;
+	margin:10px;
+	text-align:center;
+}
+.grid li a{
+	display:block;
 	overflow:hidden;
-	position:relative;
+}
+.grid li img{
+	padding:3px;
 	border:1px solid #DDD;
-	box-shadow:0 0 5px 0 #999;
-}
-.grid li:hover{
-	box-shadow:0 0 5px 0 #666;
-}
-.grid li img.maxwidth{
-	width:100%;
+	max-width:100%;
+	width:100%\0/;
 	height:auto;
 }
-.grid li img.maxheight{
-	width:auto;
-	height:100%;
+.grid li span{
+	line-height:1.5;
+	font-size:0.95em;
 }
 .list li{
 	margin:20px;
