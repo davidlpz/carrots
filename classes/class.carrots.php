@@ -7,7 +7,7 @@
  *
  * For PHP 5 or higher
  *
- * @version 0.3 (2014-04-01)
+ * @version 0.31 (2014-05-05)
  * @author David López
  * @copyright 2012-2014 David López
  * @license Released under the MIT License
@@ -18,14 +18,15 @@ require_once('settings.php');
 
 class Carrots{
 
-	private static $basePath;	
+	private static $basePath;
 	private static $baseUrl;
 	private static $galleryPath;
 	private static $cachePath;
 	private $folders = array();
 	private $folder = '';
+	private $page = 1;
 	private $images;
-	
+
 	public function __construct($folder) {
 		global $settings;
 		self::$basePath = dirname(dirname(__FILE__)) . '/';
@@ -57,7 +58,7 @@ class Carrots{
 	public function getTitle() {
 		global $settings;
 
-		if ($this->getFolder() == '') return $settings['title']; 
+		if ($this->getFolder() == '') return $settings['title'];
 		else return $this->sanitize($this->getFolder()) . ' - ' . $settings['title'];
 	}
 
@@ -69,12 +70,13 @@ class Carrots{
 	// Set the actual folder
 	private function setFolder($folder) {
 		$array = explode('/',$folder);
-		$this->folder = str_replace('/','',$array[0]);
+		$this->folder = $array[0];
+		if (isset($array[1]) && $array[1] != '') $this->page = $array[1];
 	}
 
 	// Get the actual folder
 	public function getFolder() { return $this->folder; }
-	
+
 	// Load the folders list
 	private function setFolders() {
 		global $settings;
@@ -89,7 +91,7 @@ class Carrots{
 			}
 			closedir($dh);
 		}
-		
+
 		switch ($settings['order_menu']) {
 			case 'ASC': sort($this->folders); break;
 			case 'DESC': rsort($this->folders); break;
@@ -138,7 +140,7 @@ class Carrots{
 		if (!$settings['show_menu']) return;
 
 		echo '<ul>';
-		foreach ($this->getFolders() as $folder) {			
+		foreach ($this->folders as $folder) {
 			echo ($this->getFolder() != $folder) ? '<li>' : '<li class="active">';
 			$url = self::$baseUrl . rawurlencode($folder) . '/';
 			echo '<a href="' . $url . '">' . $this->sanitize($folder) . '</a>';
@@ -154,23 +156,24 @@ class Carrots{
 		$folder = $this->getFolder();
 
 		// Page not found
-		if ($folder != '' && !in_array($folder, $this->getFolders())) {
+		if ($folder != '' && !in_array($folder, $this->folders)) {
 			echo '<h2>The page doesn\'t exist</h2>';
 			return;
 		}
 
 		// Home page
 		if ($folder == '' && $settings['show_covers_grid']) {
-			$this->displayFoldersGrid();	
+			$this->displayFoldersGrid();
 		} elseif ($folder != '') { // Display the folder content
-			echo '<h2>' . $this->sanitize($folder) . '</h2>';		
+			echo '<h2>' . $this->sanitize($folder) . '</h2>';
 			// If there's an info file, display it
 			if ($info = $this->getInfo($folder)) {
 				echo '<p>' . $info . '</p>';
-			}			
+			}
 			// If the the folder is not empty, display images
 			if (sizeof($this->images) > 0) {
 				$this->displayImages();
+				if ($settings['img_per_page'] > 0) $this->displayPagination();
 			}
 		}
 	}
@@ -179,7 +182,7 @@ class Carrots{
 	private function displayFoldersGrid() {
 		global $settings;
 		echo '<ul class="grid">';
-		foreach ($this->getFolders() as $folder) {
+		foreach ($this->folders as $folder) {
 			// Check if the folder is not empty
 			if (!$cover = $this->getCover($folder)) continue;
 			echo '<li>';
@@ -226,13 +229,15 @@ class Carrots{
 
 		$url = $this->getUrl(self::$galleryPath) . '/' . rawurlencode($this->getFolder()) . '/';
 		$thumb_url = $this->getUrl(self::$cachePath) . '/' . rawurlencode($this->getFolder()) . '/';
-		
+
 		echo '<ul class="' . $settings['display_mode'] . '">';
-		foreach ($this->images as $file) {
+		$aux = $settings['img_per_page']*($this->page-1);
+		$total = ($settings['img_per_page'] > 0 ) ? $settings['img_per_page'] : count($this->images);
+		for ($i = 0; $i + $aux < count($this->images) && $i < $total; $i++) {
+			$file = $this->images[$i+$aux];
 			if (!$settings['show_cover']) {
 				if ($this->images[0] == $file) continue;
 			}
-	
 			echo '<li>';
 			echo '<a href="' . $url . $file . '" rel="lightbox[' . $this->getFolder() . ']">';
 			if ($settings['display_mode'] == 'list') {
@@ -247,8 +252,23 @@ class Carrots{
 			}
 			echo '</a>';
 			echo '</li>';
-		}		
+		}
 		echo '</ul>';
+	}
+
+	// Display a pagination menu
+	private function displayPagination() {
+		global $settings;
+
+		$total = ceil(count($this->images) / $settings['img_per_page']);
+		if ($total == 1) return;
+		$url = $this->getUrl(self::$basePath) . '/' . rawurlencode($this->getFolder()) . '/';
+		echo '<div class="pagination">';
+		for ($i = 1; $i <= $total; $i++) {
+			$class = ($this->page == $i) ? 'active' : '';
+			echo '<a class="' . $class . '" href="' . $url . $i . '/">' . $i . '</a>';
+		}
+		echo '</div>';
 	}
 
 	// Create a thumbnail image

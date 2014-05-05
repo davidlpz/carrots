@@ -62,10 +62,17 @@ Change the value of *$settings['show_cover']* to false.
 
 **I want to show the content of each gallery as a grid**
 Change the value of *$settings['display_mode']* to 'grid'.
+
+**I want/don't want to use pagination to display the content of a gallery**
+Set the value of *settings['img_per_page']* to 0 for no pagination or the number of images per page that you want.
 					
 
 Changelog
 --------------------------------------
+
+* **v0.31** 2014-05-05
+
+	Added pagination option.
 
 * **v0.3** 2014-04-01
 

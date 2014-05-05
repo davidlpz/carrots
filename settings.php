@@ -2,7 +2,7 @@
 
 //SETTINGS FILE
 
-$settings['version'] = 'v0.3';
+$settings['version'] = 'v0.31';
 
 // Page title
 $settings['title'] = 'Carrots';
@@ -42,6 +42,9 @@ $settings['show_cover'] = true;
 // Display the title of the gallery 
 // Values: [ true | false ]
 $settings['show_title'] = true;
+
+// How many images per page to display
+$settings['img_per_page'] = 0;
 
 // Set the width and height of the cover thumb
 $settings['thumb_w'] = 165;
