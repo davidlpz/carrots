@@ -1,8 +1,8 @@
-<?php 
+<?php
 
-//SETTINGS FILE
+// SETTINGS FILE
 
-$settings['version'] = 'v0.31';
+$settings['version'] = 'v0.4';
 
 // Page title
 $settings['title'] = 'Carrots';
@@ -11,7 +11,7 @@ $settings['title'] = 'Carrots';
 $settings['gallery_path'] = 'images';
 
 // Cache folder's name
-$settings['cache_path'] = 'cache';
+$settings['cache_path'] = '_cache';
 
 // Theme to display
 $settings['theme'] = 'centered.css';
@@ -27,19 +27,19 @@ $settings['extensions'][] = 'jpg';
 $settings['extensions'][] = 'jpeg';
 $settings['extensions'][] = 'gif';
 
-// Display the folders menu 
+// Display the folders menu
 // Values: [ true | false ]
 $settings['show_menu'] = true;
 
-// Display the folders grid at the home page 
+// Display the folders grid at the home page
 // Values: [ true | false ]
 $settings['show_covers_grid'] = true;
 
-// Display the cover inside the gallery 
+// Display the cover inside the gallery
 // Values: [ true | false ]
 $settings['show_cover'] = true;
 
-// Display the title of the gallery 
+// Display the title of the gallery
 // Values: [ true | false ]
 $settings['show_title'] = true;
 
@@ -54,8 +54,8 @@ $settings['thumb_h'] = 125;
 // Values: ['ASC' | 'DESC']
 $settings['order_files'] = 'ASC';
 
-// Display images in grid or list mode 
+// Display images in grid or list mode
 // Values: [ 'grid' | 'list' ]
 $settings['display_mode'] = 'grid';
-	
+
 ?>

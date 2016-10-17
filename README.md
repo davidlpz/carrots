@@ -65,10 +65,14 @@ Change the value of *$settings['display_mode']* to 'grid'.
 
 **I want/don't want to use pagination to display the content of a gallery**
 Set the value of *settings['img_per_page']* to 0 for no pagination or the number of images per page that you want.
-					
+
 
 Changelog
 --------------------------------------
+
+* **v0.4** 2016-10-17
+
+	Minor code improvements.
 
 * **v0.31** 2014-05-05
 
@@ -93,7 +97,7 @@ Changelog
 * **v0.2** 2013-01-28
 
 	UTF-8 bug fixed: folder names now can have symbols.
-	
+
  	Minor bugs fixed.
 
 * **v0.1** 2012-11-28
@@ -112,7 +116,7 @@ Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
 to deal in the Software without restriction, including without limitation
 the rights to use, copy, modify, merge, publish, distribute, sublicense,
-and/or sell copies of the Software, and to permit persons to whom the 
+and/or sell copies of the Software, and to permit persons to whom the
 Software is furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included
@@ -123,5 +127,5 @@ OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
 THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTIONOF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE

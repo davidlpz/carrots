@@ -1,7 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300);
 
 /*  Reset.css
-	http://meyerweb.com/eric/tools/css/reset/ 
+	http://meyerweb.com/eric/tools/css/reset/
 	v2.0 | 20110126
 	License:none (public domain)
 ---------------------------------------------------- */
@@ -15,8 +15,8 @@ b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video{
 	margin:0;
@@ -49,7 +49,6 @@ html{
 body{
 	color:#666;
 	background:#FEFEFE;
-	font-size:62.5%;
 	font-family:'Open Sans', Arial, sans-serif;
 	text-align:center;
 }
@@ -64,7 +63,8 @@ img{
 	border:0;
 }
 #wrapper{
-	width:960px;
+	width:100%;
+	max-width:960px;
 	margin:0 auto;
 }
 ::selection{
@@ -88,7 +88,7 @@ img{
 
 header{
     font-weight:300;
-    font-size:1.5em;
+    font-size:0.9em;
     text-transform:uppercase;
     margin-top:25px;
 }
@@ -96,10 +96,10 @@ header a{
 	color:#333;
 }
 nav{
-	font-size:1.3em;
+	font-size:0.8em;
 	margin:50px auto;
 	padding:0;
-	width:650px;
+	width:70%;
 	text-align: center;
 }
 nav ul li{
@@ -133,11 +133,11 @@ section{
 	margin:10px 0;
 }
 section h2{
-	font-size:2em;
+	font-size:1.25em;
 	margin:0 20px 25px;
 }
 section p{
-	font-size:1.3em;
+	font-size:0.8em;
 	margin:0 20px 10px;
 }
 .grid li{
@@ -145,7 +145,6 @@ section p{
 	zoom:1;
 	*display:inline;
 	vertical-align:top;
-	width:165px;
 	margin:10px;
 	text-align:center;
 }
@@ -161,8 +160,8 @@ section p{
 	height:auto;
 }
 .grid li span{
+	font-size:0.7em;
 	line-height:1.5;
-	font-size:0.95em;
 }
 .list li{
 	margin:20px;
@@ -170,13 +169,19 @@ section p{
 .list li img{
 	max-width:100%;
 }
-
+.pagination a{
+	margin:0 5px;
+	font-size:0.75em;
+}
+.pagination .active{
+	color:#000;
+}
 
 /* Footer
 ---------------------------------------------------- */
 
 footer{
 	clear:both;
-	font-size:1em;
-	line-height:5em;
+	font-size:0.625em;
+	margin-top:100px;
 }

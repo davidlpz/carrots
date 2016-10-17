@@ -7,18 +7,16 @@
  *
  * For PHP 5 or higher
  *
- * @version 0.22 (2013-05-04)
+ * @version 0.4 (2016-10-17)
  * @author David López
- * @copyright 2012 David López
+ * @copyright 2012-2016 David López
  * @license Released under the MIT License
  *
  */
 
 require_once('classes/class.carrots.php');
-
 $carrots = new Carrots($_GET['url']);
-$siteUrl = $carrots->getBaseUrl();
-
+$homeUrl = $carrots->getHomeUrl();
 ?>
 
 <!DOCTYPE html>
@@ -26,22 +24,20 @@ $siteUrl = $carrots->getBaseUrl();
 <head>
 <meta charset="utf-8" />
 <title><?php echo $carrots->getTitle(); ?></title>
-<link rel="stylesheet" href="<?php echo $siteUrl; ?>styles/<?php echo $settings['theme']; ?>" />
-<link rel="stylesheet" href="<?php echo $siteUrl; ?>libraries/slimbox2/css/slimbox2.css" />
-<script src="<?php echo $siteUrl; ?>libraries/jquery/jquery-1.4.min.js"></script>
-<script src="<?php echo $siteUrl; ?>libraries/slimbox2/slimbox2.js"></script>
+<link rel="stylesheet" href="<?php echo $homeUrl; ?>styles/<?php echo $settings['theme']; ?>" />
+<link rel="stylesheet" href="<?php echo $homeUrl; ?>libraries/slimbox2/css/slimbox2.css" />
+<script src="<?php echo $homeUrl; ?>libraries/jquery/jquery-1.4.min.js"></script>
+<script src="<?php echo $homeUrl; ?>libraries/slimbox2/slimbox2.js"></script>
 <!--[if lt IE 9]>
-<script src="<?php echo $siteUrl; ?>libraries/html5shiv/html5shiv.js"></script>
+<script src="<?php echo $homeUrl; ?>libraries/html5shiv/html5shiv.min.js"></script>
 <![endif]-->
 </head>
 
 <body>
 	<div id="wrapper">
 		<header>
-			<h1>
-				<a href="<?php echo $siteUrl; ?>">
-					<?php echo $settings['title']; ?>
-				</a>
+			<h1 class="page-title">
+				<a href="<?php echo $homeUrl; ?>"><?php echo $settings['title']; ?></a>
 			</h1>
 		</header>
 
@@ -49,8 +45,8 @@ $siteUrl = $carrots->getBaseUrl();
 			<?php $carrots->displayMenu(); ?>
 		</nav>
 
-		<section>
-			<?php $carrots->displayContent(); ?>	
+		<section class="main">
+			<?php $carrots->displayContent(); ?>
 		</section>
 
 		<footer>

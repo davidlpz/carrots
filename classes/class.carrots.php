@@ -7,9 +7,9 @@
  *
  * For PHP 5 or higher
  *
- * @version 0.31 (2014-05-05)
+ * @version 0.4 (2016-10-17)
  * @author David López
- * @copyright 2012-2014 David López
+ * @copyright 2012-2016 David López
  * @license Released under the MIT License
  *
  */
@@ -18,30 +18,25 @@ require_once('settings.php');
 
 class Carrots{
 
-	private static $basePath;
-	private static $baseUrl;
-	private static $galleryPath;
-	private static $cachePath;
-	private $folders = array();
-	private $folder = '';
-	private $page = 1;
-	private $images;
+	private static $basePath; // Home path
+	private static $galleryPath; // Gallery folder's path
+	private static $cachePath; // Cache folder's path
+	private $folders = array(); // List of folders
+	private $folder = false; // Current folder
+	private $page = 1; // Current page
+	private $images = array(); // Images array
 
 	public function __construct($folder) {
 		global $settings;
 		self::$basePath = dirname(dirname(__FILE__)) . '/';
-		self::$baseUrl = $this->getUrl(self::$basePath) . '/';
 		self::$galleryPath = self::$basePath . $settings['gallery_path'] . '/';
-		self::$cachePath = self::$basePath . $settings['cache_path'] . '/';
+		self::$cachePath = self::$galleryPath . $settings['cache_path'] . '/';
 		$this->setFolders();
-		if ($folder != '') {
+		if ($folder) {
 			$this->setFolder($folder);
 			$this->setImages($this->getFolder());
 		}
 	}
-
-	// Get the base url of the app
-	public function getBaseUrl() { return self::$baseUrl; }
 
 	// Get the url of a path
 	private function getUrl($path) {
@@ -54,12 +49,29 @@ class Carrots{
 		} else return '';
 	}
 
-	// Get the name of the actual folder
+	private function makeUrl($folder){
+		return $this->getUrl(self::$basePath) . '/' . rawurlencode($folder) . '/';
+	}
+
+	private function makeGalleryUrl($folder){
+		return $this->getUrl(self::$galleryPath) . '/' . rawurlencode($folder) . '/';
+	}
+
+	private function makeCacheUrl($folder){
+		return $this->getUrl(self::$cachePath) . '/' . rawurlencode($folder) . '/';
+	}
+
+	// Get the home url
+	public function getHomeUrl() { return $this->getUrl(self::$basePath) . '/'; }
+
+	// Get the name of the current folder
 	public function getTitle() {
 		global $settings;
 
-		if ($this->getFolder() == '') return $settings['title'];
-		else return $this->sanitize($this->getFolder()) . ' - ' . $settings['title'];
+		if (!$this->getFolder()) // Home page
+			return $settings['title'];
+		else // You're inside a folder
+			return $this->sanitize($this->getFolder()) . ' - ' . $settings['title'];
 	}
 
 	// Sanitize a string so there's no strange symbols
@@ -67,14 +79,14 @@ class Carrots{
 		return (preg_match('!!u', $str)) ? $str : utf8_encode($str);
 	}
 
-	// Set the actual folder
+	// If not home page, set the current folder
 	private function setFolder($folder) {
 		$array = explode('/',$folder);
 		$this->folder = $array[0];
-		if (isset($array[1]) && $array[1] != '') $this->page = $array[1];
+		if (isset($array[1]) && $array[1]) $this->page = $array[1];
 	}
 
-	// Get the actual folder
+	// Get the current folder
 	public function getFolder() { return $this->folder; }
 
 	// Load the folders list
@@ -91,15 +103,15 @@ class Carrots{
 			}
 			closedir($dh);
 		}
-
+		natcasesort($this->folders);
 		switch ($settings['order_menu']) {
-			case 'ASC': sort($this->folders); break;
-			case 'DESC': rsort($this->folders); break;
-			default: sort($this->folders); break;
+			case 'ASC': break;
+			case 'DESC': $this->folders = array_reverse($this->folders); break;
+			default: break;
 		}
 	}
 
-	// Get the folders array
+	// Get the folders list
 	public function getFolders() { return $this->folders; }
 
 	// Load the images of a folder
@@ -122,11 +134,11 @@ class Carrots{
 			}
 			closedir($dh);
 		}
-
+		natcasesort($this->images);
 		switch ($settings['order_files']) {
-			case 'ASC': sort($this->images); break;
-			case 'DESC': rsort($this->images); break;
-			default: sort($this->images); break;
+			case 'ASC': break;
+			case 'DESC': $this->images = array_reverse($this->images); break;
+			default: break;
 		}
 	}
 
@@ -141,9 +153,8 @@ class Carrots{
 
 		echo '<ul>';
 		foreach ($this->folders as $folder) {
-			echo ($this->getFolder() != $folder) ? '<li>' : '<li class="active">';
-			$url = self::$baseUrl . rawurlencode($folder) . '/';
-			echo '<a href="' . $url . '">' . $this->sanitize($folder) . '</a>';
+			echo ($folder != $this->getFolder()) ? '<li>' : '<li class="active">';
+			echo '<a href="' . $this->makeUrl($folder) . '">' . $this->sanitize($folder) . '</a>';
 			echo '</li>';
 		}
 		echo '</ul>';
@@ -154,26 +165,23 @@ class Carrots{
 		global $settings;
 
 		$folder = $this->getFolder();
-
-		// Page not found
-		if ($folder != '' && !in_array($folder, $this->folders)) {
-			echo '<h2>The page doesn\'t exist</h2>';
-			return;
-		}
-
-		// Home page
-		if ($folder == '' && $settings['show_covers_grid']) {
+		if (!$folder && $settings['show_covers_grid']) { // Home page
 			$this->displayFoldersGrid();
-		} elseif ($folder != '') { // Display the folder content
-			echo '<h2>' . $this->sanitize($folder) . '</h2>';
-			// If there's an info file, display it
-			if ($info = $this->getInfo($folder)) {
-				echo '<p>' . $info . '</p>';
-			}
-			// If the the folder is not empty, display images
-			if (sizeof($this->images) > 0) {
-				$this->displayImages();
-				if ($settings['img_per_page'] > 0) $this->displayPagination();
+		} elseif ($folder) {
+			if (in_array($folder, $this->folders)) { // If the folder exists, display the content
+				echo '<h2>' . $this->sanitize($folder) . '</h2>';
+				// If there's an info file, display it
+				if ($info = $this->getInfo($folder)) {
+					echo '<p>' . $info . '</p>';
+				}
+				// If the folder's not empty, display images
+				if (sizeof($this->images)) {
+					$this->displayImages();
+					if ($settings['img_per_page']) $this->displayPagination();
+				}
+			} else { // Page not found
+				echo '<h2>The page doesn\'t exist</h2>';
+				return;
 			}
 		}
 	}
@@ -186,7 +194,7 @@ class Carrots{
 			// Check if the folder is not empty
 			if (!$cover = $this->getCover($folder)) continue;
 			echo '<li>';
-			echo '<a href="' . self::$baseUrl . rawurlencode($folder) . '/">' . $cover . '</a>';
+			echo '<a href="' . $this->makeUrl($folder) . '">' . $cover . '</a>';
 			if ($settings['show_title'])
 				echo '<span>' . $this->sanitize($folder) . '</span>';
 			echo '</li>';
@@ -194,25 +202,31 @@ class Carrots{
 		echo '</ul>';
 	}
 
-	// Display the cover of a folder
+	// Get the cover of a folder
 	private function getCover($folder) {
 		global $settings;
 
 		// Get the images and pick the first one to use as cover
 		$this->setImages($folder);
-		if (sizeof($this->images) > 0) {
-			$img_path = self::$galleryPath . $folder . '/' . $this->images[0];
-			$thumb_path = self::$cachePath . $folder . '/' . $this->images[0];
-			$thumb_url = $this->getUrl(self::$cachePath) . '/' . rawurlencode($folder) . '/' . $this->images[0];
-			if (file_exists($img_path)) {
-				if (!file_exists($thumb_path)) {
-					$this->makeThumb($img_path, self::$cachePath, $folder);
-				}
-				return '<img src="' . $thumb_url . '" alt="'. $this->sanitize($folder) . '" />';
-			}
+		if (sizeof($this->images)) {
+			return $this->getImage($folder, $this->images[0]);
 		}
-
 		return false; // The folder's empty
+	}
+
+	// Return the image tag
+	private function getImage($folder, $name) {
+		$img_path = self::$galleryPath . $folder . '/' . $name;
+		if (file_exists($img_path)) {
+			$thumb_path = self::$cachePath . $folder . '/' . $name;
+			if (!file_exists($thumb_path)) {
+				$this->makeThumb($img_path, $folder);
+			}
+			$thumb_url = $this->makeCacheUrl($folder) . $name;
+			$alt = (!$this->folder) ? $folder : $name;
+			return '<img src="' . $thumb_url . '" alt="'. $alt . '" />';
+		}
+		return false; // There's no image
 	}
 
 	// Get the info of a folder
@@ -227,28 +241,22 @@ class Carrots{
 	private function displayImages() {
 		global $settings;
 
-		$url = $this->getUrl(self::$galleryPath) . '/' . rawurlencode($this->getFolder()) . '/';
-		$thumb_url = $this->getUrl(self::$cachePath) . '/' . rawurlencode($this->getFolder()) . '/';
-
-		echo '<ul class="' . $settings['display_mode'] . '">';
+		$folder = $this->getFolder();
+		$url = $this->makeGalleryUrl($folder);
 		$aux = $settings['img_per_page']*($this->page-1);
-		$total = ($settings['img_per_page'] > 0 ) ? $settings['img_per_page'] : count($this->images);
+		$total = ($settings['img_per_page']) ? $settings['img_per_page'] : count($this->images);
+		echo '<ul class="' . $settings['display_mode'] . '">';
 		for ($i = 0; $i + $aux < count($this->images) && $i < $total; $i++) {
 			$file = $this->images[$i+$aux];
 			if (!$settings['show_cover']) {
 				if ($this->images[0] == $file) continue;
 			}
 			echo '<li>';
-			echo '<a href="' . $url . $file . '" rel="lightbox[' . $this->getFolder() . ']">';
+			echo '<a href="' . $url . $file . '" rel="lightbox[' . $folder . ']">';
 			if ($settings['display_mode'] == 'list') {
 				echo '<img src="' . $url . $file .'" alt="'. $file . '" />';
 			} else {
-				$thumb_path = self::$cachePath . $this->folder . '/' . $file;
-				if (!file_exists($thumb_path)) {
-					$img_path = self::$galleryPath . $this->folder . '/' . $file;
-					$this->makeThumb($img_path, self::$cachePath, $this->folder);
-				}
-				echo '<img src="' . $thumb_url . $file .'" alt="'. $file . '" />';
+				echo $this->getImage($folder, $file);
 			}
 			echo '</a>';
 			echo '</li>';
@@ -262,7 +270,7 @@ class Carrots{
 
 		$total = ceil(count($this->images) / $settings['img_per_page']);
 		if ($total == 1) return;
-		$url = $this->getUrl(self::$basePath) . '/' . rawurlencode($this->getFolder()) . '/';
+		$url = $this->makeUrl($this->getFolder());
 		echo '<div class="pagination">';
 		for ($i = 1; $i <= $total; $i++) {
 			$class = ($this->page == $i) ? 'active' : '';
@@ -272,56 +280,62 @@ class Carrots{
 	}
 
 	// Create a thumbnail image
-	private function makeThumb($img, $basePath, $folder) {
+	private function makeThumb($img, $folder) {
 		global $settings;
 
+		//Get dimensions and type of original image
+		list($w, $h, $type) = getimagesize($img);
+		switch ($type){
+			case '1':
+				$import_img = 'imagecreatefromgif';
+				$export_img = 'imagegif';
+				break;
+			case '2':
+				$import_img = 'imagecreatefromjpeg';
+				$export_img = 'imagejpeg';
+				break;
+			case '3':
+				$import_img = 'imagecreatefrompng';
+				$export_img = 'imagepng';
+				break;
+			default: return false;
+		}
+		$old = $import_img($img);
+
+		//New dimensions
+		$nw = $settings['thumb_w'];
+		$nh = $settings['thumb_h'];
+
+		// Cropping dimensions
 		$src_x = 0;
 		$src_y = 0;
 
-		if (preg_match('/[.](jpg|jpeg)$/i', $img)) {
-			$old = imagecreatefromjpeg($img);
-		} else if (preg_match('/[.](gif)$/i', $img)) {
-			$old = imagecreatefromgif($img);
-		} else if (preg_match('/[.](png)$/i', $img)) {
-			$old = imagecreatefrompng($img);
-		}
-
-		//Get dimensions of original image
-		$width_old = imagesx($old);
-		$height_old = imagesy($old);
-
-		//New dimensions
-		$width_new = $settings['thumb_w'];
-		$height_new = $settings['thumb_h'];
-
 		//Resize & crop image based on smallest ratio
-		if (($width_old/$height_old) < ($width_new/$height_new)) {
-			//Determine Resize ratio on width
-			$ratio = $width_new / $width_old;
+		if (($w/$h) < ($nw/$nh)) {
+			//Determine new ratio on width
+			$ratio = $nw / $w;
 			//Detemine cropping dimensions for height
-			$crop =  $height_old - ($height_new/$ratio) ;
-			$height_old = $height_old - $crop;
-			$src_y = floor($crop/2);
+			$src_y = floor(($h - $nh/$ratio)/2);
+			$h = $nh / $ratio;
 		} else {
-			//Detemine Resize ratio on height
-			$ratio = $height_new / $height_old;
+			//Detemine new ratio on height
+			$ratio = $nh / $h;
 			//Detemine cropping dimensions for width
-			$crop = $width_old - ($width_new/$ratio);
-			$width_old = $width_old - $crop;
-			$src_x = floor($crop/2);
+			$src_x = floor(($w - $nw/$ratio)/2);
+			$w = $nw / $ratio;
 		}
 
-		$new = imagecreatetruecolor($width_new, $height_new);
-		imagecopyresampled($new, $old, 0, 0, $src_x, $src_y, $width_new, $height_new, $width_old, $height_old);
+		$new = imagecreatetruecolor($nw, $nh);
+		imagecopyresampled($new, $old, 0, 0, $src_x, $src_y, $nw, $nh, $w, $h);
 
-		if (!file_exists($basePath . $folder . '/')) {
-			if(!mkdir($basePath . $folder . '/',0755)) {
-				die("There was a problem. Please try again");
+		if (!file_exists(self::$cachePath . $folder . '/')) {
+			if (!mkdir(self::$cachePath . $folder . '/', 0755)) {
+				die("There was a problem creating the cache folder. Please try again");
 			}
 		}
 
-		imagejpeg($new, $basePath . $folder . str_replace(array(self::$galleryPath, $folder),'',$img));
-
+		$img_name = str_replace(array(self::$galleryPath, $folder), '', $img);
+		$export_img($new, self::$cachePath . $folder . $img_name);
 		imagedestroy($old);
 	}
 
