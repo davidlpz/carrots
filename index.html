@@ -3,24 +3,21 @@
 <head>
 <meta charset="utf-8" />
 <meta name="description" content="Carrots is a simple PHP image gallery script, perfect to easily build a portfolio site. You just have to upload it to your server along with your image files" />
-<meta name="keywords" content="carrots, powered by carrots, poweredbycarrots, php gallery, gallery script, photo gallery, image gallery, portfolio, php, free script, open source, david lopez"/>
 <title>Carrots | Help others see you better</title>
-<link href='http://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet'>
+<link href='http://fonts.googleapis.com/css?family=Oxygen:400,700' rel='stylesheet'>
 <link rel="stylesheet" href="style.css" />
 <!--[if lt IE 9]>
-<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 <![endif]-->
 </head>
 
 <body>
 	<nav>
 		<a class="button" href="#home">Home</a>
-		<a class="button" href="http://davidlpz.com/demo/carrots/" target="_blank">Demo</a>
 		<a class="button" href="#instructions">Instructions</a>
 		<a class="button" href="#howto">How to</a>
+		<a class="button" href="http://davidlpz.com/demo/carrots/" target="_blank">Demo</a>
 	</nav>
-
-	<a id="backTop" class="hidden" href="#home"></a>
 
 	<!-- Section one: home -->
 
@@ -36,17 +33,17 @@
 				<p>Carrots es un script en PHP para hacer galerías de imágenes, perfecto para montar fácilmente un portfolio.<br />
 				Solo tienes que subirlo a tu servidor junto a tus ficheros de imágenes y listo. Sin tocar código. Sin necesidad de bases de datos. Solo tu cliente FTP.</p>
 				<p class="small">
-					<a class="button bigger" href="https://github.com/davidlpz/carrots/archive/master.zip" title="Download Carrots">Download</a>
-					Version 0.31 | May 05, 2014 | <a href="https://github.com/davidlpz/carrots" target="_blank" title="View source code in GitHun">View source code in GitHub</a>
+					<a class="button bigger" href="https://github.com/davidlpz/carrots/" title="Download Carrots">Download</a>
+					Version 0.4 | Oct 17, 2016
 				</p>
 			</div>
 			<div class="right">
 				<img id="images" src="img/image1.jpg" alt="Demo images" />
 				<div id="menu-circ">
-					<a id="image1" onclick="javascript:changeImage(this)"></a>
-					<a id="image2" onclick="javascript:changeImage(this)"></a>
-					<a id="image3" onclick="javascript:changeImage(this)"></a>
-					<a id="image4" onclick="javascript:changeImage(this)"></a>
+					<a id="image1" class="btn active"></a>
+					<a id="image2" class="btn"></a>
+					<a id="image3" class="btn"></a>
+					<a id="image4" class="btn"></a>
 				</div>
 			</div>
 		</div>
@@ -121,7 +118,7 @@
 					<dt>I want to show the content of each gallery as a grid</dt>
 						<dd>Change the value of $settings['display_mode'] to 'grid'.</dd>
 					<dt>I want/don't want to use pagination to display the content of a gallery</dt>
-						<dd>Set the value of *settings['img_per_page']* to 0 for no pagination or the number of images per page that you want.</dd>
+						<dd>Set the value of settings['img_per_page'] to 0 for no pagination or the number of images per page that you want.</dd>
 				</dl>
 			</div>
 			<div class="right">
@@ -152,26 +149,14 @@
 					<dt>Quiero mostrar el contenido de cada galería en forma de cuadrícula</dt>
 						<dd>Cambia el valor de $settings['display_mode'] por 'grid'.</dd>
 					<dt>Quiero dividir el contenido de cada galería en varias paginas</dt>
-						<dd>Cambia el valor de *settings['img_per_page']* por el número de imágenes por página a mostrar, o pon 0 si quieres que se muestren todas en la misma.</dd>
+						<dd>Cambia el valor de settings['img_per_page'] por el número de imágenes por página a mostrar, o pon 0 si quieres que se muestren todas en la misma.</dd>
 				</dl>
 			</div>
 		</div>
 	</section>
 
+	<a id="backTop" class="hidden" href="#home"></a>
 
 <script src="library.js"></script>
-<script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-38583319-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
 </body>
 </html>
