@@ -329,8 +329,8 @@ class Carrots{
 		imagecopyresampled($new, $old, 0, 0, $src_x, $src_y, $nw, $nh, $w, $h);
 
 		if (!file_exists(self::$cachePath . $folder . '/')) {
-			if (!mkdir(self::$cachePath . $folder . '/', 0755)) {
-				die("There was a problem creating the cache folder. Please try again");
+			if (!mkdir(self::$cachePath . $folder . '/', 0755, true)) {
+				die("There was a problem creating the cache folder. Please try again.");
 			}
 		}
 
