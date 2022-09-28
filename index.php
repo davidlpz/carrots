@@ -26,10 +26,10 @@ $homeUrl = $carrots->getHomeUrl();
 <title><?php echo $carrots->getTitle(); ?></title>
 <link rel="stylesheet" href="<?php echo $homeUrl; ?>styles/<?php echo $settings['theme']; ?>" />
 <link rel="stylesheet" href="<?php echo $homeUrl; ?>libraries/slimbox2/css/slimbox2.css" />
-<script src="<?php echo $homeUrl; ?>libraries/jquery/jquery-1.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="<?php echo $homeUrl; ?>libraries/slimbox2/slimbox2.js"></script>
 <!--[if lt IE 9]>
-<script src="<?php echo $homeUrl; ?>libraries/html5shiv/html5shiv.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 <![endif]-->
 </head>
 
