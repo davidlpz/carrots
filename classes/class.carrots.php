@@ -109,11 +109,6 @@ class Carrots {
 		$this->folders = $this->sortList($settings['order_menu'], $this->folders);
 	}
 
-	// Get the folders list
-	public function getFolders() {
-		return $this->folders;
-	}
-
 	// Load the images of a folder
 	public function setImages($folder) {
 		global $settings;
