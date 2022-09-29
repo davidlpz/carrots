@@ -70,6 +70,12 @@ Set the value of *settings['img_per_page']* to 0 for no pagination or the number
 Changelog
 --------------------------------------
 
+* **v0.5** 2022-09-29
+
+    Upgraded jQuery and slimbox2 version.
+
+    Refactor PHP code.
+
 * **v0.4** 2016-10-17
 
 	Minor code improvements.

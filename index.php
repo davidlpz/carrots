@@ -52,7 +52,8 @@ $homeUrl = $carrots->getHomeUrl();
 		</section>
 
 		<footer>
-			<p>Powered by <a href="http://www.poweredbycarrots.net/" target="_blank">Carrots</a> <?php echo $settings['version']; ?></p>
+			<p>Powered by <a href="https://github.com/davidlpz/carrots" target="_blank">Carrots</a>
+                <?php echo $settings['version']; ?></p>
 		</footer>
 	</div>
 </body>

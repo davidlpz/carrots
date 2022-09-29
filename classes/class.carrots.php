@@ -7,9 +7,9 @@
  *
  * For PHP 5 or higher
  *
- * @version 0.4 (2016-10-17)
+ * @version 0.5 (2022-09-29)
  * @author David López
- * @copyright 2012-2016 David López
+ * @copyright 2012-2022 David López
  * @license Released under the MIT License
  *
  */
