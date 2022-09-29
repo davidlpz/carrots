@@ -16,15 +16,15 @@
 
 require_once('settings.php');
 
-class Carrots{
+class Carrots {
 
 	private static $basePath; // Home path
 	private static $galleryPath; // Gallery folder's path
 	private static $cachePath; // Cache folder's path
-	private $folders = array(); // List of folders
+	private $folders = []; // List of folders
 	private $folder = false; // Current folder
 	private $page = 1; // Current page
-	private $images = array(); // Images array
+	private $images = []; // Images array
 
 	public function __construct($folder) {
 		global $settings;
@@ -46,32 +46,37 @@ class Carrots{
 
 		if (strlen($basePath) <= strlen($filePath)) {
 			return 'http://' . $_SERVER['HTTP_HOST'] . substr($filePathName, strlen($basePath));
-		} else return '';
+		}
+
+		return '';
 	}
 
-	private function makeUrl($folder){
+	private function makeUrl($folder) {
 		return $this->getUrl(self::$basePath) . DIRECTORY_SEPARATOR . rawurlencode($folder) . DIRECTORY_SEPARATOR;
 	}
 
-	private function makeGalleryUrl($folder){
+	private function makeGalleryUrl($folder) {
 		return $this->getUrl(self::$galleryPath) . DIRECTORY_SEPARATOR . rawurlencode($folder) . DIRECTORY_SEPARATOR;
 	}
 
-	private function makeCacheUrl($folder){
+	private function makeCacheUrl($folder) {
 		return $this->getUrl(self::$cachePath) . DIRECTORY_SEPARATOR . rawurlencode($folder) . DIRECTORY_SEPARATOR;
 	}
 
 	// Get the home url
-	public function getHomeUrl() { return $this->getUrl(self::$basePath) . DIRECTORY_SEPARATOR; }
+	public function getHomeUrl() {
+		return $this->getUrl(self::$basePath) . DIRECTORY_SEPARATOR;
+	}
 
 	// Get the name of the current folder
 	public function getTitle() {
 		global $settings;
 
-		if (!$this->getFolder()) // Home page
+		if (!$this->getFolder()) { // Home page
 			return $settings['title'];
-		else // You're inside a folder
+		} else { // You're inside a folder
 			return $this->sanitize($this->getFolder()) . ' - ' . $settings['title'];
+		}
 	}
 
 	// Sanitize a string so there's no strange symbols
@@ -87,7 +92,9 @@ class Carrots{
 	}
 
 	// Get the current folder
-	public function getFolder() { return $this->folder; }
+	public function getFolder() {
+		return $this->folder;
+	}
 
 	// Load the folders list
 	private function setFolders() {
@@ -96,8 +103,8 @@ class Carrots{
 		if ($dh = opendir(self::$galleryPath)) {
 			while (($filename = readdir($dh)) !== false) {
 				if (is_dir(self::$galleryPath . $filename)
-					&& (strpos($filename,".") !== 0)
-					&& (strpos($filename,"_") !== 0)) {
+					&& (strpos($filename, '.') !== 0)
+					&& (strpos($filename, '_') !== 0)) {
 						$this->folders[] = $filename;
 				}
 			}
@@ -112,7 +119,9 @@ class Carrots{
 	}
 
 	// Get the folders list
-	public function getFolders() { return $this->folders; }
+	public function getFolders() {
+		return $this->folders;
+	}
 
 	// Load the images of a folder
 	public function setImages($folder) {
@@ -127,8 +136,8 @@ class Carrots{
 				$file = $path . DIRECTORY_SEPARATOR . $filename;
 				$info = pathinfo($file);
 				if (is_file($file)
-					&& (strpos($filename,".") !== 0)
-					&& (in_array(strToLower($info["extension"]),$settings['extensions']))) {
+					&& (strpos($filename, '.') !== 0)
+					&& (in_array(strToLower($info['extension']), $settings['extensions']))) {
 						$this->images[] = $filename;
 				}
 			}
@@ -143,7 +152,9 @@ class Carrots{
 	}
 
 	// Get the images of the actual folder
-	private function getImages() { return $this->images; }
+	private function getImages() {
+		return $this->images;
+	}
 
 	// Display the folders menu
 	public function displayMenu() {
@@ -234,6 +245,7 @@ class Carrots{
 		if (file_exists(self::$galleryPath . $folder . DIRECTORY_SEPARATOR . '_info.txt')) {
 			return nl2br(file_get_contents(self::$galleryPath . $folder . DIRECTORY_SEPARATOR . '_info.txt'));
 		}
+
 		return false; // There's no info file
 	}
 
@@ -283,9 +295,9 @@ class Carrots{
 	private function makeThumb($img, $folder) {
 		global $settings;
 
-		//Get dimensions and type of original image
+		// Get dimensions and type of original image
 		list($w, $h, $type) = getimagesize($img);
-		switch ($type){
+		switch ($type) {
 			case '1':
 				$import_img = 'imagecreatefromgif';
 				$export_img = 'imagegif';
