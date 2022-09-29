@@ -28,9 +28,9 @@ class Carrots{
 
 	public function __construct($folder) {
 		global $settings;
-		self::$basePath = dirname(dirname(__FILE__)) . '/';
-		self::$galleryPath = self::$basePath . $settings['gallery_path'] . '/';
-		self::$cachePath = self::$galleryPath . $settings['cache_path'] . '/';
+		self::$basePath = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR;
+		self::$galleryPath = self::$basePath . $settings['gallery_path'] . DIRECTORY_SEPARATOR;
+		self::$cachePath = self::$galleryPath . $settings['cache_path'] . DIRECTORY_SEPARATOR;
 		$this->setFolders();
 		if ($folder) {
 			$this->setFolder($folder);
@@ -50,19 +50,19 @@ class Carrots{
 	}
 
 	private function makeUrl($folder){
-		return $this->getUrl(self::$basePath) . '/' . rawurlencode($folder) . '/';
+		return $this->getUrl(self::$basePath) . DIRECTORY_SEPARATOR . rawurlencode($folder) . DIRECTORY_SEPARATOR;
 	}
 
 	private function makeGalleryUrl($folder){
-		return $this->getUrl(self::$galleryPath) . '/' . rawurlencode($folder) . '/';
+		return $this->getUrl(self::$galleryPath) . DIRECTORY_SEPARATOR . rawurlencode($folder) . DIRECTORY_SEPARATOR;
 	}
 
 	private function makeCacheUrl($folder){
-		return $this->getUrl(self::$cachePath) . '/' . rawurlencode($folder) . '/';
+		return $this->getUrl(self::$cachePath) . DIRECTORY_SEPARATOR . rawurlencode($folder) . DIRECTORY_SEPARATOR;
 	}
 
 	// Get the home url
-	public function getHomeUrl() { return $this->getUrl(self::$basePath) . '/'; }
+	public function getHomeUrl() { return $this->getUrl(self::$basePath) . DIRECTORY_SEPARATOR; }
 
 	// Get the name of the current folder
 	public function getTitle() {
@@ -81,7 +81,7 @@ class Carrots{
 
 	// If not home page, set the current folder
 	private function setFolder($folder) {
-		$array = explode('/',$folder);
+		$array = explode(DIRECTORY_SEPARATOR, $folder);
 		$this->folder = $array[0];
 		if (isset($array[1]) && $array[1]) $this->page = $array[1];
 	}
@@ -124,7 +124,7 @@ class Carrots{
 		$this->images = array();
 		if ($dh = opendir($path)) {
 			while (($filename = readdir($dh)) !== false) {
-				$file = $path . '/' . $filename;
+				$file = $path . DIRECTORY_SEPARATOR . $filename;
 				$info = pathinfo($file);
 				if (is_file($file)
 					&& (strpos($filename,".") !== 0)
@@ -216,9 +216,9 @@ class Carrots{
 
 	// Return the image tag
 	private function getImage($folder, $name) {
-		$img_path = self::$galleryPath . $folder . '/' . $name;
+		$img_path = self::$galleryPath . $folder . DIRECTORY_SEPARATOR . $name;
 		if (file_exists($img_path)) {
-			$thumb_path = self::$cachePath . $folder . '/' . $name;
+			$thumb_path = self::$cachePath . $folder . DIRECTORY_SEPARATOR . $name;
 			if (!file_exists($thumb_path)) {
 				$this->makeThumb($img_path, $folder);
 			}
@@ -231,8 +231,8 @@ class Carrots{
 
 	// Get the info of a folder
 	private function getInfo($folder) {
-		if (file_exists(self::$galleryPath . $folder . '/_info.txt')) {
-			return nl2br(file_get_contents(self::$galleryPath . $folder . '/_info.txt'));
+		if (file_exists(self::$galleryPath . $folder . DIRECTORY_SEPARATOR . '_info.txt')) {
+			return nl2br(file_get_contents(self::$galleryPath . $folder . DIRECTORY_SEPARATOR . '_info.txt'));
 		}
 		return false; // There's no info file
 	}
@@ -328,8 +328,8 @@ class Carrots{
 		$new = imagecreatetruecolor($nw, $nh);
 		imagecopyresampled($new, $old, 0, 0, $src_x, $src_y, $nw, $nh, $w, $h);
 
-		if (!file_exists(self::$cachePath . $folder . '/')) {
-			if (!mkdir(self::$cachePath . $folder . '/', 0755, true)) {
+		if (!file_exists(self::$cachePath . $folder . DIRECTORY_SEPARATOR)) {
+			if (!mkdir(self::$cachePath . $folder . DIRECTORY_SEPARATOR, 0755, true)) {
 				die("There was a problem creating the cache folder. Please try again.");
 			}
 		}
