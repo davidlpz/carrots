@@ -39,33 +39,28 @@ class Carrots {
 	}
 
 	// Get the url of a path
-	private function getUrl($path) {
+	private function getUrl($folder, $path = '') {
+		$url = '';
+		$path = ($path == '') ? self::$basePath : $path;
+
 		$filePathName = realpath($path);
 		$filePath = realpath(dirname($path));
 		$basePath = realpath($_SERVER['DOCUMENT_ROOT']);
 
 		if (strlen($basePath) <= strlen($filePath)) {
-			return 'http://' . $_SERVER['HTTP_HOST'] . substr($filePathName, strlen($basePath));
+			$url = 'http://' . $_SERVER['HTTP_HOST'] . substr($filePathName, strlen($basePath)) . DIRECTORY_SEPARATOR;
+
+			if ($folder !== '') {
+				$url .= rawurlencode($folder) . DIRECTORY_SEPARATOR;
+			}
 		}
 
-		return '';
-	}
-
-	private function makeUrl($folder) {
-		return $this->getUrl(self::$basePath) . DIRECTORY_SEPARATOR . rawurlencode($folder) . DIRECTORY_SEPARATOR;
-	}
-
-	private function makeGalleryUrl($folder) {
-		return $this->getUrl(self::$galleryPath) . DIRECTORY_SEPARATOR . rawurlencode($folder) . DIRECTORY_SEPARATOR;
-	}
-
-	private function makeCacheUrl($folder) {
-		return $this->getUrl(self::$cachePath) . DIRECTORY_SEPARATOR . rawurlencode($folder) . DIRECTORY_SEPARATOR;
+		return $url;
 	}
 
 	// Get the home url
 	public function getHomeUrl() {
-		return $this->getUrl(self::$basePath) . DIRECTORY_SEPARATOR;
+		return $this->getUrl('', self::$basePath);
 	}
 
 	// Get the name of the current folder
@@ -172,7 +167,7 @@ class Carrots {
 		echo '<ul>';
 		foreach ($this->folders as $folder) {
 			echo ($folder != $this->getFolder()) ? '<li>' : '<li class="active">';
-			echo '<a href="' . $this->makeUrl($folder) . '">' . $this->sanitize($folder) . '</a>';
+			echo '<a href="' . $this->getUrl($folder) . '">' . $this->sanitize($folder) . '</a>';
 			echo '</li>';
 		}
 		echo '</ul>';
@@ -212,7 +207,7 @@ class Carrots {
 			// Check if the folder is not empty
 			if (!$cover = $this->getCover($folder)) continue;
 			echo '<li>';
-			echo '<a href="' . $this->makeUrl($folder) . '">' . $cover . '</a>';
+			echo '<a href="' . $this->getUrl($folder) . '">' . $cover . '</a>';
 			if ($settings['show_title'])
 				echo '<span>' . $this->sanitize($folder) . '</span>';
 			echo '</li>';
@@ -240,7 +235,7 @@ class Carrots {
 			if (!file_exists($thumb_path)) {
 				$this->makeThumb($img_path, $folder);
 			}
-			$thumb_url = $this->makeCacheUrl($folder) . $name;
+			$thumb_url = $this->getUrl($folder, self::$cachePath) . $name;
 			$alt = (!$this->folder) ? $folder : $name;
 			return '<img src="' . $thumb_url . '" alt="'. $alt . '" />';
 		}
@@ -261,7 +256,7 @@ class Carrots {
 		global $settings;
 
 		$folder = $this->getFolder();
-		$url = $this->makeGalleryUrl($folder);
+		$url = $this->getUrl($folder, self::$galleryPath);
 		$aux = $settings['img_per_page']*($this->page-1);
 		$total = ($settings['img_per_page']) ? $settings['img_per_page'] : count($this->images);
 		echo '<ul class="' . $settings['display_mode'] . '">';
@@ -289,7 +284,7 @@ class Carrots {
 
 		$total = ceil(count($this->images) / $settings['img_per_page']);
 		if ($total == 1) return;
-		$url = $this->makeUrl($this->getFolder());
+		$url = $this->getUrl($this->getFolder());
 		echo '<div class="pagination">';
 		for ($i = 1; $i <= $total; $i++) {
 			$class = ($this->page == $i) ? 'active' : '';
