@@ -15,7 +15,9 @@
  */
 
 require_once('classes/class.carrots.php');
-$carrots = new Carrots($_GET['url']);
+
+$url = isset($_GET['url']) ? $_GET['url']:  '';
+$carrots = new Carrots($url);
 $homeUrl = $carrots->getHomeUrl();
 ?>
 
