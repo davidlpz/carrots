@@ -110,12 +110,8 @@ class Carrots {
 			}
 			closedir($dh);
 		}
-		natcasesort($this->folders);
-		switch ($settings['order_menu']) {
-			case 'ASC': break;
-			case 'DESC': $this->folders = array_reverse($this->folders); break;
-			default: break;
-		}
+
+		$this->folders = $this->sortList($settings['order_menu'], $this->folders);
 	}
 
 	// Get the folders list
@@ -130,7 +126,7 @@ class Carrots {
 		$path = self::$galleryPath . $folder;
 		if (!is_dir($path)) return;
 
-		$this->images = array();
+		$this->images = [];
 		if ($dh = opendir($path)) {
 			while (($filename = readdir($dh)) !== false) {
 				$file = $path . DIRECTORY_SEPARATOR . $filename;
@@ -143,12 +139,23 @@ class Carrots {
 			}
 			closedir($dh);
 		}
-		natcasesort($this->images);
-		switch ($settings['order_files']) {
-			case 'ASC': break;
-			case 'DESC': $this->images = array_reverse($this->images); break;
-			default: break;
+
+		$this->images = $this->sortList($settings['order_files'], $this->images);
+	}
+
+	private function sortList($order, $items) {
+		natcasesort($items);
+		switch ($order) {
+			case 'ASC':
+				break;
+			case 'DESC':
+				$items = array_reverse($items);
+				break;
+			default:
+				break;
 		}
+
+		return $items;
 	}
 
 	// Get the images of the actual folder
